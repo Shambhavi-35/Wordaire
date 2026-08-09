@@ -1,0 +1,25 @@
+package com.example.wordaire.data
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface CategoryDao {
+    @Query("SELECT * FROM categories")
+    fun getAllCategories(): Flow<List<Category>>
+
+    @Query("SELECT COUNT(*) FROM categories")
+    suspend fun getCategoryCount(): Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCategories(categories: List<Category>)
+
+    @Query("UPDATE categories SET completedLevels = :completed WHERE id = :categoryId")
+    suspend fun updateProgress(categoryId: String, completed: Int)
+
+    @Query("UPDATE categories SET isLocked = :isLocked WHERE id = :categoryId")
+    suspend fun updateLockStatus(categoryId: String, isLocked: Boolean)
+}

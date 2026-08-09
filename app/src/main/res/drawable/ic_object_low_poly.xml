@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Base Prism -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M24,8 L40,36 L8,36 Z" />
+    <!-- Facet Shadow -->
+    <path
+        android:fillColor="#000000"
+        android:fillAlpha="0.1"
+        android:pathData="M24,8 L40,36 L24,36 Z" />
+    <!-- Side Facet -->
+    <path
+        android:fillColor="#FFA000"
+        android:pathData="M8,36 L24,8 L4,32 Z" />
+</vector>

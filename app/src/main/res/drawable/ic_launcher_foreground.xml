@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Using a slightly scaled-down size to ensure the full image fits
+         within the safe zone of various adaptive icon shapes (circle, squircle, etc.) -->
+    <item
+        android:width="72dp"
+        android:height="72dp"
+        android:drawable="@drawable/ic_menu_gallery"
+        android:gravity="center" />
+</layer-list>

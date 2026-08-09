@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <!-- Dynamic Category Tab (hidden by default) -->
+    <TextView
+        android:id="@+id/categoryTab"
+        android:layout_width="60dp"
+        android:layout_height="24dp"
+        android:background="@drawable/bg_foundation_header"
+        android:gravity="center"
+        android:textColor="#3E2723"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        tools:text="Colors"
+        tools:visibility="visible" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/foundationRoot"
+        android:layout_width="80dp"
+        android:layout_height="110dp"
+        android:layout_marginHorizontal="4dp"
+        app:cardBackgroundColor="#F9FBE7"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:strokeColor="#FFD54F"
+        app:strokeWidth="3dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Empty Slot Content (shown when no category is matched yet) -->
+            <ImageView
+                android:id="@+id/emptySlotIcon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:alpha="0.3"
+                android:src="@android:drawable/ic_menu_help"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="#FBC02D"
+                android:contentDescription="empty slot" />
+
+            <!-- Matched Slot Content -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/matchedContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/foundationProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:textColor="#3E2723"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="1/6" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="8dp"
+                    android:src="@android:drawable/btn_star_big_on"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="#FBC02D"
+                    android:contentDescription="star" />
+
+                <TextView
+                    android:id="@+id/foundationName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:textColor="#3E2723"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Red" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>
