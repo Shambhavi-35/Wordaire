@@ -291,7 +291,7 @@ class GameplayFragment : Fragment() {
         // Dynamically change background based on world
         val bgRes = when (categoryId) {
             "around_globe" -> R.drawable.bg_ocean
-            "active_science" -> R.drawable.bg_space
+            "active_science", "mathematics" -> R.drawable.bg_space
             "infinite_mode" -> R.drawable.bg_splash_gradient
             else -> R.drawable.bg_savanna // living world & others
         }
@@ -306,8 +306,13 @@ class GameplayFragment : Fragment() {
             val start = (levelNum - 1) % pool.size
             pool.subList(start, minOf(start + 4, pool.size)) + pool.subList(0, maxOf(0, 4 - (pool.size - start)))
         }
+        "mathematics" -> {
+            val targetsPool = listOf("Target = 2", "Target = 3", "Target = 4", "Target = 5", "Target = 6", "Target = 7", "Target = 8", "Target = 9", "Target = 10", "Target = 12", "Target = 15", "Target = 20")
+            val start = ((levelNum - 1) * 2) % targetsPool.size
+            targetsPool.subList(start, minOf(start + 4, targetsPool.size)) + targetsPool.subList(0, maxOf(0, 4 - (targetsPool.size - start)))
+        }
         "infinite_mode" -> {
-            val pool = listOf("Animals", "Foods", "Insects", "Plants", "Birds", "Sea Life", "Colors", "Shapes", "Numbers", "Music", "Art", "Theater", "Countries", "Landmarks", "Nature", "Cities", "Travel", "Sports", "Space", "Science", "Computers", "Invention", "Body Parts", "Weather", "Family", "Clothing", "Vehicles", "Tools", "Kitchenware", "Furniture", "Electronics", "School", "Occupations", "Hobbies", "Emotions", "Time", "Buildings", "Natural Disasters", "Materials", "Fantasy", "Holidays", "Jewelry", "Pet Supplies", "Bathroom", "Garden", "Camping", "Gym", "Cosmetics", "Board Games", "Mythology", "Superheroes", "Pirates", "Wild West", "Medieval", "Prehistoric", "Beverages")
+            val pool = listOf("Animals", "Foods", "Insects", "Plants", "Birds", "Sea Life", "Colors", "Shapes", "Numbers", "Music", "Art", "Theater", "Countries", "Landmarks", "Nature", "Cities", "Travel", "Sports", "Space", "Science", "Computers", "Invention", "Body Parts", "Weather", "Family", "Clothing", "Vehicles", "Tools", "Kitchenware", "Furniture", "Electronics", "School", "Occupations", "Hobbies", "Emotions", "Time", "Buildings", "Natural Disasters", "Materials", "Fantasy", "Holidays", "Jewelry", "Pet Supplies", "Bathroom", "Garden", "Camping", "Gym", "Cosmetics", "Board Games", "Mythology", "Superheroes", "Pirates", "Wild West", "Medieval", "Prehistoric", "Beverages", "Addition", "Subtraction", "Multiplication", "Division", "Root")
             val start = (levelNum - 1) % pool.size
             pool.subList(start, minOf(start + 5, pool.size)) + pool.subList(0, maxOf(0, 5 - (pool.size - start)))
         }
@@ -573,6 +578,27 @@ class GameplayFragment : Fragment() {
     }
 
     private fun getCategoryItems(cat: String): List<String> = when (cat) {
+        // --- Mathematics (Target Result Matching Operations) ---
+        "Target = 2", "2" -> listOf("1 + 1", "3 - 1", "1 × 2", "4 ÷ 2", "√4", "5 - 3", "6 ÷ 3", "∛8", "2 + 0", "2 × 1", "10 - 8", "8 ÷ 4", "12 - 10", "14 ÷ 7", "4 - 2", "16 ÷ 8")
+        "Target = 3", "3" -> listOf("1 + 2", "5 - 2", "1 × 3", "9 ÷ 3", "√9", "2 + 1", "10 - 7", "12 ÷ 4", "∛27", "3 × 1", "15 - 12", "6 ÷ 2", "4 - 1", "18 ÷ 6", "11 - 8", "21 ÷ 7")
+        "Target = 4", "4" -> listOf("2 + 2", "6 - 2", "2 × 2", "16 ÷ 4", "√16", "1 + 3", "10 - 6", "1 × 4", "20 ÷ 5", "∛64", "12 ÷ 3", "8 - 4", "5 - 1", "24 ÷ 6", "14 - 10", "28 ÷ 7")
+        "Target = 5", "5" -> listOf("2 + 3", "10 - 5", "1 × 5", "25 ÷ 5", "√25", "1 + 4", "15 - 10", "5 × 1", "30 ÷ 6", "∛125", "20 ÷ 4", "7 - 2", "8 - 3", "35 ÷ 7", "11 - 6", "40 ÷ 8")
+        "Target = 6", "6" -> listOf("3 + 3", "10 - 4", "2 × 3", "36 ÷ 6", "√36", "1 + 5", "12 - 6", "1 × 6", "24 ÷ 4", "∛216", "18 ÷ 3", "8 - 2", "9 - 3", "42 ÷ 7", "15 - 9", "48 ÷ 8")
+        "Target = 7", "7" -> listOf("3 + 4", "12 - 5", "1 × 7", "49 ÷ 7", "√49", "2 + 5", "10 - 3", "7 × 1", "21 ÷ 3", "∛343", "28 ÷ 4", "15 - 8", "9 - 2", "56 ÷ 8", "16 - 9", "63 ÷ 9")
+        "Target = 8", "8" -> listOf("4 + 4", "15 - 7", "2 × 4", "64 ÷ 8", "√64", "3 + 5", "12 - 4", "1 × 8", "32 ÷ 4", "∛512", "16 ÷ 2", "20 - 12", "10 - 2", "72 ÷ 9", "18 - 10", "80 ÷ 10")
+        "Target = 9", "9" -> listOf("4 + 5", "18 - 9", "3 × 3", "81 ÷ 9", "√81", "2 + 7", "15 - 6", "1 × 9", "36 ÷ 4", "∛729", "27 ÷ 3", "20 - 11", "10 - 1", "45 ÷ 5", "12 - 3", "54 ÷ 6")
+        "Target = 10", "10" -> listOf("5 + 5", "15 - 5", "2 × 5", "100 ÷ 10", "√100", "3 + 7", "20 - 10", "1 × 10", "50 ÷ 5", "∛1000", "30 ÷ 3", "25 - 15", "4 + 6", "60 ÷ 6", "12 - 2", "70 ÷ 7")
+        "Target = 12", "12" -> listOf("6 + 6", "20 - 8", "3 × 4", "144 ÷ 12", "√144", "5 + 7", "15 - 3", "2 × 6", "36 ÷ 3", "∛1728", "48 ÷ 4", "24 ÷ 2", "4 + 8", "60 ÷ 5", "18 - 6", "72 ÷ 6")
+        "Target = 15", "15" -> listOf("10 + 5", "20 - 5", "3 × 5", "225 ÷ 15", "√225", "7 + 8", "30 - 15", "1 × 15", "45 ÷ 3", "∛3375", "60 ÷ 4", "25 - 10", "6 + 9", "75 ÷ 5", "18 - 3", "90 ÷ 6")
+        "Target = 20", "20" -> listOf("10 + 10", "25 - 5", "4 × 5", "400 ÷ 20", "√400", "12 + 8", "30 - 10", "2 × 10", "60 ÷ 3", "∛8000", "80 ÷ 4", "50 - 30", "15 + 5", "100 ÷ 5", "24 - 4", "120 ÷ 6")
+
+        // --- Operations Fallback ---
+        "Addition" -> listOf("1 + 1", "2 + 3", "4 + 5", "10 + 10", "6 + 6", "3 + 4", "5 + 5", "7 + 8")
+        "Subtraction" -> listOf("3 - 1", "10 - 5", "20 - 8", "15 - 7", "6 - 2", "12 - 5", "18 - 9", "25 - 5")
+        "Multiplication" -> listOf("1 × 2", "2 × 3", "3 × 4", "4 × 5", "2 × 5", "3 × 3", "2 × 6", "3 × 5")
+        "Division" -> listOf("4 ÷ 2", "9 ÷ 3", "16 ÷ 4", "25 ÷ 5", "36 ÷ 6", "49 ÷ 7", "64 ÷ 8", "100 ÷ 10")
+        "Root" -> listOf("√4", "√9", "√16", "√25", "√36", "√49", "√64", "√100")
+
         // --- Living World ---
         "Animals" -> listOf("Lion", "Tiger", "Bear", "Panda", "Zebra", "Wolf", "Elephant", "Giraffe", "Kangaroo", "Koala", "Fox", "Deer", "Monkey", "Rabbit", "Owl", "Eagle", "Cheetah", "Leopard", "Hippo", "Rhino", "Camel", "Donkey", "Goat", "Sheep", "Cow", "Pig", "Horse", "Cat", "Dog", "Hamster", "Squirrel")
         "Foods" -> listOf("Apple", "Pizza", "Sushi", "Burger", "Donut", "Pasta", "Taco", "Salad", "Soup", "Cake", "Bread", "Rice", "Cookie", "Steak", "Fruit", "Juice", "Waffle", "Pancake", "Muffin", "Bacon", "Cheese", "Butter", "Yogurt", "Honey", "Jam", "Curry", "Kebab", "Omelet", "Sandwich", "Chips", "Pie")

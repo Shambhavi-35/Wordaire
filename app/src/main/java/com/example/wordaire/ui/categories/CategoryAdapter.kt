@@ -52,6 +52,7 @@ class CategoryAdapter(private val onCategoryClick: (Category) -> Unit) :
 
             val iconRes = when (category.id) {
                 "living_world" -> R.drawable.world
+                "mathematics" -> if (category.isLocked) R.drawable.science else R.drawable.science1
                 "infinite_mode" -> R.drawable.infinite
                 "arts_culture" -> if (category.isLocked) R.drawable.art else R.drawable.art1
                 "around_globe" -> if (category.isLocked) R.drawable.globe else R.drawable.globe1

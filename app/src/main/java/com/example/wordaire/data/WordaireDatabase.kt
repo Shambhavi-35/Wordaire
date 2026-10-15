@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Category::class, Level::class], version = 6, exportSchema = false)
+@Database(entities = [Category::class, Level::class], version = 7, exportSchema = false)
 abstract class WordaireDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun levelDao(): LevelDao
@@ -36,11 +36,19 @@ abstract class WordaireDatabase : RoomDatabase() {
                 .build()
                 INSTANCE = instance
                 
-                // Ensure population on first run or if empty
+                // Ensure population on first run or if missing
                 CoroutineScope(Dispatchers.IO).launch {
                     val count = instance.categoryDao().getCategoryCount()
                     if (count == 0) {
                         populateDatabase(instance)
+                    } else if (instance.categoryDao().getCategory("mathematics") == null) {
+                        val mathCategory = Category("mathematics", "Mathematics", "Addition, subtraction, division, multiplication & roots", 20, 0, false)
+                        instance.categoryDao().insertCategory(mathCategory)
+                        val levels = mutableListOf<Level>()
+                        for (i in 1..20) {
+                            levels.add(Level("mathematics_$i", "mathematics", i, i > 1, 0))
+                        }
+                        instance.levelDao().insertLevels(levels)
                     }
                 }
 
@@ -50,11 +58,12 @@ abstract class WordaireDatabase : RoomDatabase() {
 
         private suspend fun populateDatabase(db: WordaireDatabase) {
             val categories = listOf(
-                Category("living_world", "Wild Kingdom", "Animals, food & wild places", 20, 0, false),
-                Category("infinite_mode", "Endless Odyssey", "Endless word matching fun!", 99, 0, true),
-                Category("arts_culture", "Creative Canvas", "Music, art & creative minds", 20, 0, true),
-                Category("around_globe", "Globe Trekker", "Countries, nature & geography", 20, 0, true),
-                Category("active_science", "Brain Lab", "Sports, science & discovery", 20, 0, true)
+                Category("living_world", "Living World", "Animals, food & wild places", 20, 0, false),
+                Category("mathematics", "Mathematics", "Addition, subtraction, division, multiplication & roots", 20, 0, false),
+                Category("infinite_mode", "Infinite Mode", "Endless word matching fun!", 999, 0, false),
+                Category("arts_culture", "Arts & Culture", "Music, art & creative minds", 20, 0, true),
+                Category("around_globe", "Around the Globe", "Countries, nature & geography", 20, 0, true),
+                Category("active_science", "Active & Science", "Sports, science & discovery", 20, 0, true)
             )
             db.categoryDao().insertCategories(categories)
 
@@ -63,8 +72,8 @@ abstract class WordaireDatabase : RoomDatabase() {
                 val catId = category.id
                 val maxLevels = category.totalLevels
                 for (i in 1..maxLevels) {
-                    // Unlock only the first level of the first category
-                    val isLocked = !(catId == "living_world" && i == 1)
+                    // Unlock only the first level of unlocked categories
+                    val isLocked = category.isLocked || i > 1
                     levels.add(Level("${catId}_$i", catId, i, isLocked, 0))
                 }
             }

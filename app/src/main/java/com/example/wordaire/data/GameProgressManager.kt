@@ -15,6 +15,7 @@ class GameProgressManager(private val db: WordaireDatabase) {
         // Ordering of categories for unlocking
         val CATEGORY_ORDER = listOf(
             "living_world",
+            "mathematics",
             "infinite_mode",
             "arts_culture",
             "around_globe",
